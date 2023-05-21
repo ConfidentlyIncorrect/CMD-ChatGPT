@@ -1,0 +1,33 @@
+import openai
+
+# Set up your OpenAI API credentials
+openai.api_key = 'YOUR_API_KEY'
+
+# Define a function to send a message to ChatGPT and receive a response
+def send_message(message):
+    response = openai.Completion.create(
+        engine='davinci-codex',  # Use the 'davinci-codex' engine
+        prompt=message,
+        max_tokens=50,  # Adjust the response length as needed
+        n=1,
+        stop=None,
+        temperature=0.7  # Adjust the temperature to control the randomness of the output
+    )
+
+    # Extract the generated reply from the API response
+    reply = response.choices[0].text.strip()
+
+    return reply
+
+# Main program loop
+print("Welcome to ChatGPT!")
+print("Type 'exit' to end the conversation.")
+
+while True:
+    user_input = input("You: ")
+    
+    if user_input.lower() == 'exit':
+        break
+
+    response = send_message(user_input)
+    print("ChatGPT:", response)
